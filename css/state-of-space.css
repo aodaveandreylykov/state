@@ -18,7 +18,7 @@
 /* State of Space — static layout of Figma frame 13002:693.
    Type: Figtree (open). The file also loaded Manrope and Forum;
    the visible display type reads as a grotesque, so Figtree is used throughout.
-   No motion. */
+   The hero plays one load animation. Nothing else moves. */
 
 :root {
   --cream: #f5f2ec;
@@ -164,6 +164,8 @@ ul {
 .hero__word--left {
   justify-self: start;
   text-align: left;
+  clip-path: inset(-15% 100% -15% 0);
+  animation: hero-reveal 0.95s cubic-bezier(0.33, 1, 0.68, 1) 0.55s forwards;
 }
 
 .hero__word--right {
@@ -171,6 +173,8 @@ ul {
   text-align: right;
   letter-spacing: calc(100vw * -3.41 / 1920);
   transform: translate(calc(100vw * 2 / 1920), calc(100vw * 2.5 / 1920));
+  clip-path: inset(-15% 100% -15% 0);
+  animation: hero-reveal 0.9s cubic-bezier(0.33, 1, 0.68, 1) 1.25s forwards;
 }
 
 .hero__circle {
@@ -178,7 +182,8 @@ ul {
   aspect-ratio: 1;
   border-radius: 50%;
   overflow: hidden;
-  transform: translateX(calc(100vw * -2.5 / 1920));
+  transform: translateX(calc(100vw * -2.5 / 1920)) scale(0);
+  animation: hero-circle-in 1.5s cubic-bezier(0.33, 1, 0.68, 1) 0.25s forwards;
 }
 
 .hero__circle img {
@@ -193,10 +198,43 @@ ul {
   margin-top: 0;
   text-align: center;
   color: #817d7a;
-  transform: translateX(calc(100vw * -22.5 / 1920));
+  opacity: 0;
+  transform: translate(calc(100vw * -22.5 / 1920), 12px);
   font-size: calc(100vw * 18.2 / 1920);
   line-height: calc(100vw * 23 / 1920);
   letter-spacing: calc(100vw * 0.08 / 1920);
+  animation: hero-caption-in 0.65s cubic-bezier(0.33, 1, 0.68, 1) 2.15s forwards;
+}
+
+@keyframes hero-circle-in {
+  from { transform: translateX(calc(100vw * -2.5 / 1920)) scale(0.08); }
+  to { transform: translateX(calc(100vw * -2.5 / 1920)) scale(1); }
+}
+
+@keyframes hero-reveal {
+  from { clip-path: inset(-15% 100% -15% 0); }
+  to { clip-path: inset(-15% 0 -15% 0); }
+}
+
+@keyframes hero-caption-in {
+  from {
+    opacity: 0;
+    transform: translate(calc(100vw * -22.5 / 1920), 12px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(calc(100vw * -22.5 / 1920), 0);
+  }
+}
+
+@keyframes hero-circle-in-phone {
+  from { transform: scale(0.08); }
+  to { transform: scale(1); }
+}
+
+@keyframes hero-caption-in-phone {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
 }
 
 .manifesto {
@@ -644,7 +682,8 @@ ul {
 
   .hero__circle {
     width: calc(100vw * 338 / 390);
-    transform: none;
+    transform: scale(0);
+    animation-name: hero-circle-in-phone;
   }
 
   .hero__tag {
@@ -652,7 +691,9 @@ ul {
     font-size: 15px;
     line-height: 1.25;
     letter-spacing: normal;
-    transform: none;
+    opacity: 0;
+    transform: translateY(12px);
+    animation-name: hero-caption-in-phone;
   }
 
   .manifesto {
@@ -795,5 +836,38 @@ ul {
   .finale__circle {
     width: min(260px, 68vw);
     border-width: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__circle,
+  .hero__word--left,
+  .hero__word--right,
+  .hero__tag {
+    animation: none;
+  }
+
+  .hero__circle {
+    transform: translateX(calc(100vw * -2.5 / 1920));
+  }
+
+  .hero__word--left,
+  .hero__word--right {
+    clip-path: none;
+  }
+
+  .hero__tag {
+    opacity: 1;
+    transform: translateX(calc(100vw * -22.5 / 1920));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 800px) {
+  .hero__circle,
+  .hero__word,
+  .hero__word--left,
+  .hero__word--right,
+  .hero__tag {
+    transform: none;
   }
 }
