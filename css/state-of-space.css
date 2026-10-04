@@ -366,11 +366,11 @@ ul {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: flex-end;
   box-sizing: border-box;
   min-height: 100vh;
-  padding-top: 48px;
-  padding-bottom: 72px;
+  padding-top: 0;
+  padding-bottom: 48px;
   overflow: hidden;
   color: #fff;
   text-align: center;
