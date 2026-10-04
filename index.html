@@ -234,6 +234,8 @@
         mask.style.cssText = "";
         if (photo) photo.style.cssText = "";
         overlays.forEach(function (el) { el.style.opacity = ""; });
+        vista.style.opacity = "";
+        vista.style.visibility = "";
         vista.style.pointerEvents = "";
       }
 
@@ -249,11 +251,13 @@
       }
 
       function hideVilla() {
+        vista.style.opacity = "0";
+        vista.style.visibility = "hidden";
+        vista.style.pointerEvents = "none";
         mask.style.cssText = "visibility:hidden";
         if (photo) photo.style.cssText = "";
         overlays.forEach(function (el) { el.style.opacity = "0"; });
         manBits.forEach(function (bit) { bit.style.opacity = ""; });
-        vista.style.pointerEvents = "none";
       }
 
       function lerp(a, b, t) {
@@ -277,11 +281,16 @@
         manBits.forEach(function (bit) { bit.style.opacity = String(Math.max(textOp, 0)); });
 
         if (rise <= 0) {
+          vista.style.opacity = "0";
+          vista.style.visibility = "hidden";
+          vista.style.pointerEvents = "none";
           mask.style.cssText = "visibility:hidden";
           overlays.forEach(function (el) { el.style.opacity = "0"; });
-          vista.style.pointerEvents = "none";
           return;
         }
+
+        vista.style.opacity = "1";
+        vista.style.visibility = "visible";
 
         var dStart = vw * 0.72;
         var topStart = vh;
@@ -345,6 +354,8 @@
           if (photo) photo.style.cssText = "";
           overlays.forEach(function (el) { el.style.opacity = "1"; });
           manBits.forEach(function (bit) { bit.style.opacity = "0"; });
+          vista.style.opacity = "1";
+          vista.style.visibility = "visible";
           vista.style.pointerEvents = "auto";
         }
       }

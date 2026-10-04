@@ -401,6 +401,8 @@ ul {
   height: 100%;
   min-height: 0;
   pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
 }
 
 .vista__poem {
@@ -954,6 +956,8 @@ ul {
     height: auto;
     min-height: 100vh;
     pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
   }
 
   .vista__mask,
