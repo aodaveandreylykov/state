@@ -72,12 +72,11 @@
         <p class="manifesto__year">2026</p>
       </div>
     </section>
-    </section>
-    </div>
-    </div>
 
     <section class="vista" aria-label="The Cliff Villa">
-      <img class="vista__photo" src="images/vista-photo.jpg" alt="Stone cliff villa with a lit terrace above the ocean at dusk" width="1920" height="1080">
+      <div class="vista__mask">
+        <img class="vista__photo" src="images/vista-photo.jpg" alt="Stone cliff villa with a lit terrace above the ocean at dusk" width="1920" height="1080">
+      </div>
       <div class="vista__poem">
         <p class="vista__lines">
           Height clears<br>
@@ -101,6 +100,9 @@
         <a class="pill" href="#book">Book now</a>
       </div>
     </section>
+    </section>
+    </div>
+    </div>
 
     <section class="gallery" aria-label="The Cliff Villa interiors">
       <figure>
@@ -172,7 +174,12 @@
       var tag = document.querySelector(".hero__tag");
       var full = document.querySelector(".hero__full");
       var man = document.querySelector(".manifesto");
-      if (!pin || !circle || !full || !man || reduce.matches) return;
+      var manBits = document.querySelectorAll(".manifesto__quote, .manifesto__mark, .manifesto__foot");
+      var vista = document.querySelector(".vista");
+      var mask = document.querySelector(".vista__mask");
+      var photo = document.querySelector(".vista__photo");
+      var overlays = document.querySelectorAll(".vista__poem, .vista__loc");
+      if (!pin || !circle || !full || !man || !vista || !mask || reduce.matches) return;
 
       var ticking = false;
       var takenOver = false;
@@ -223,6 +230,123 @@
           word.style.opacity = "";
         });
         man.style.transform = "";
+        manBits.forEach(function (bit) { bit.style.opacity = ""; });
+        mask.style.cssText = "";
+        if (photo) photo.style.cssText = "";
+        overlays.forEach(function (el) { el.style.opacity = ""; });
+        vista.style.pointerEvents = "";
+      }
+
+      function placePhoto() {
+        if (!photo) return;
+        photo.style.position = "absolute";
+        photo.style.width = window.innerWidth + "px";
+        photo.style.height = window.innerHeight + "px";
+        photo.style.maxWidth = "none";
+        photo.style.inset = "auto";
+        photo.style.left = (-mask.offsetLeft) + "px";
+        photo.style.top = (-mask.offsetTop) + "px";
+      }
+
+      function hideVilla() {
+        mask.style.cssText = "visibility:hidden";
+        if (photo) photo.style.cssText = "";
+        overlays.forEach(function (el) { el.style.opacity = "0"; });
+        manBits.forEach(function (bit) { bit.style.opacity = ""; });
+        vista.style.pointerEvents = "none";
+      }
+
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+
+      function applyVilla(v) {
+        var vw = window.innerWidth;
+        var vh = window.innerHeight;
+        var fade = clamp((v - 0.02) / 0.16, 0, 1);
+        var rise = clamp((v - 0.18) / 0.18, 0, 1);
+        var grow = clamp((v - 0.36) / 0.16, 0, 1);
+        var morph = clamp((v - 0.52) / 0.18, 0, 1);
+        var open = clamp((v - 0.70) / 0.16, 0, 1);
+        var ui = clamp((v - 0.74) / 0.14, 0, 1);
+        var textOp = 1 - fade * 0.58;
+        if (open > 0) textOp = 0.12 * (1 - open);
+        else if (morph > 0) textOp = 0.26 - morph * 0.14;
+        else if (grow > 0) textOp = 0.36 - grow * 0.1;
+        else if (rise > 0) textOp = 0.42 - rise * 0.06;
+        manBits.forEach(function (bit) { bit.style.opacity = String(Math.max(textOp, 0)); });
+
+        if (rise <= 0) {
+          mask.style.cssText = "visibility:hidden";
+          overlays.forEach(function (el) { el.style.opacity = "0"; });
+          vista.style.pointerEvents = "none";
+          return;
+        }
+
+        var dStart = vw * 0.72;
+        var topStart = vh;
+        var d3 = vw * 0.891;
+        var top3 = vh * 0.833;
+        var d4 = vw;
+        var top4 = vh * 0.5;
+        var top5 = vh * 0.111;
+        var h5 = vh - top5;
+        var r5 = Math.min(vh * 0.463, vw * 0.5);
+        var w;
+        var h;
+        var top;
+        var radiusTop;
+        var radiusBot;
+        if (open > 0) {
+          w = vw;
+          h = lerp(h5, vh, open);
+          top = lerp(top5, 0, open);
+          radiusTop = r5 * (1 - open);
+          radiusBot = 0;
+        } else if (morph > 0) {
+          var bottom4 = vh - top4 - d4;
+          w = lerp(d4, vw, morph);
+          h = lerp(d4, h5, morph);
+          top = vh - h - lerp(bottom4, 0, morph);
+          radiusTop = lerp(d4 / 2, r5, morph);
+          radiusBot = lerp(d4 / 2, 0, morph);
+        } else if (grow > 0) {
+          var dGrow = lerp(d3, d4, grow);
+          w = dGrow;
+          h = dGrow;
+          top = lerp(top3, top4, grow);
+          radiusTop = dGrow / 2;
+          radiusBot = dGrow / 2;
+        } else {
+          var dRise = lerp(dStart, d3, rise);
+          w = dRise;
+          h = dRise;
+          top = lerp(topStart, top3, rise);
+          radiusTop = dRise / 2;
+          radiusBot = dRise / 2;
+        }
+
+        mask.style.visibility = "visible";
+        mask.style.position = "absolute";
+        mask.style.inset = "auto";
+        mask.style.right = "auto";
+        mask.style.width = w.toFixed(2) + "px";
+        mask.style.height = h.toFixed(2) + "px";
+        mask.style.left = ((vw - w) / 2).toFixed(2) + "px";
+        mask.style.top = top.toFixed(2) + "px";
+        mask.style.bottom = "auto";
+        mask.style.borderRadius = radiusTop.toFixed(2) + "px " + radiusTop.toFixed(2) + "px " + radiusBot.toFixed(2) + "px " + radiusBot.toFixed(2) + "px";
+        mask.style.overflow = "hidden";
+        placePhoto();
+        overlays.forEach(function (el) { el.style.opacity = String(ui); });
+        vista.style.pointerEvents = ui > 0.9 ? "auto" : "none";
+        if (v >= 0.92) {
+          mask.style.cssText = "";
+          if (photo) photo.style.cssText = "";
+          overlays.forEach(function (el) { el.style.opacity = "1"; });
+          manBits.forEach(function (bit) { bit.style.opacity = "0"; });
+          vista.style.pointerEvents = "auto";
+        }
       }
 
       function coverScale(shift) {
@@ -248,13 +372,17 @@
         var rect = pin.getBoundingClientRect();
         var total = pin.offsetHeight - window.innerHeight;
         var scrolled = clamp(-rect.top, 0, Math.max(total, 0));
-        var p = total > 0 ? scrolled / total : 0;
-        if (p <= 0) {
+        var heroSpan = window.innerHeight * 2;
+        if (scrolled <= 0) {
           clearScroll();
           return;
         }
 
         takenOver = true;
+        var p = clamp(scrolled / heroSpan, 0, 1);
+        var villaV = total > heroSpan ? clamp((scrolled - heroSpan) / (total - heroSpan), 0, 1) : 0;
+        if (scrolled <= heroSpan) hideVilla();
+        else applyVilla(villaV);
         var grow = clamp(p / 0.46, 0, 1);
         var shift = shiftX();
         var scale = 1 + (coverScale(shift) - 1) * grow;

@@ -18,7 +18,8 @@
 /* State of Space — static layout of Figma frame 13002:693.
    Type: Figtree (open). The file also loaded Manrope and Forum;
    the visible display type reads as a grotesque, so Figtree is used throughout.
-   The hero plays one load animation. Nothing else moves. */
+   The hero plays one load animation. Scroll then opens the cliff
+   photo, lifts the manifesto, and reveals the villa through an arch. */
 
 :root {
   --cream: #f5f2ec;
@@ -80,7 +81,7 @@ ul {
 }
 
 .hero-pin {
-  height: 300vh;
+  height: 520vh;
 }
 
 .hero-stage {
@@ -375,13 +376,31 @@ ul {
   text-align: center;
 }
 
+.vista__mask {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: 0;
+}
+
 .vista__photo {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  max-width: none;
   object-fit: cover;
   object-position: center center;
+}
+
+.hero .vista {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  height: 100%;
+  min-height: 0;
+  pointer-events: none;
 }
 
 .vista__poem {
@@ -926,6 +945,26 @@ ul {
     height: auto;
     overflow: visible;
     transform: none;
+  }
+
+  .hero .vista {
+    position: static;
+    inset: auto;
+    z-index: auto;
+    height: auto;
+    min-height: 100vh;
+    pointer-events: auto;
+  }
+
+  .vista__mask,
+  .vista__photo,
+  .manifesto__quote,
+  .manifesto__mark,
+  .manifesto__foot,
+  .vista__poem,
+  .vista__loc {
+    opacity: 1;
+    filter: none;
   }
 
   .hero__circle,
