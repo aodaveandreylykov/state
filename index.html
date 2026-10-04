@@ -72,7 +72,11 @@
         <p class="manifesto__year">2026</p>
       </div>
     </section>
+    </section>
+    </div>
+    </div>
 
+    <div class="vista-slot">
     <section class="vista" aria-label="The Cliff Villa">
       <div class="vista__mask">
         <img class="vista__photo" src="images/vista-photo.jpg" alt="Stone cliff villa with a lit terrace above the ocean at dusk" width="1920" height="1080">
@@ -100,8 +104,6 @@
         <a class="pill" href="#book">Book now</a>
       </div>
     </section>
-    </section>
-    </div>
     </div>
 
     <section class="gallery" aria-label="The Cliff Villa interiors">
@@ -169,6 +171,9 @@
     (function () {
       var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
       var pin = document.querySelector(".hero-pin");
+      var stage = document.querySelector(".hero-stage");
+      var slot = document.querySelector(".vista-slot");
+      var nav = document.querySelector(".nav");
       var circle = document.querySelector(".hero__circle");
       var words = document.querySelectorAll(".hero__word");
       var tag = document.querySelector(".hero__tag");
@@ -179,7 +184,7 @@
       var mask = document.querySelector(".vista__mask");
       var photo = document.querySelector(".vista__photo");
       var overlays = document.querySelectorAll(".vista__poem, .vista__loc");
-      if (!pin || !circle || !full || !man || !vista || !mask || reduce.matches) return;
+      if (!pin || !stage || !slot || !nav || !circle || !full || !man || !vista || !mask || reduce.matches) return;
 
       var ticking = false;
       var takenOver = false;
@@ -237,6 +242,47 @@
         vista.style.opacity = "";
         vista.style.visibility = "";
         vista.style.pointerEvents = "";
+        parkVista();
+        resetHeader();
+      }
+
+      function resetHeader() {
+        nav.style.opacity = "";
+        nav.style.transform = "";
+        nav.style.pointerEvents = "";
+      }
+
+      function applyHeader(t) {
+        nav.style.opacity = String(1 - t);
+        nav.style.transform = "translateY(" + (-t * 100).toFixed(3) + "%)";
+        nav.style.pointerEvents = t > 0.92 ? "none" : "";
+      }
+
+      function parkVista() {
+        vista.style.position = "";
+        vista.style.inset = "";
+        vista.style.zIndex = "";
+        vista.style.width = "";
+        vista.style.height = "";
+      }
+
+      function fixVista() {
+        vista.style.position = "fixed";
+        vista.style.inset = "0";
+        vista.style.zIndex = "20";
+        vista.style.width = "100%";
+        vista.style.height = "100%";
+      }
+
+      function showRest() {
+        parkVista();
+        mask.style.cssText = "";
+        if (photo) photo.style.cssText = "";
+        overlays.forEach(function (el) { el.style.opacity = "1"; });
+        manBits.forEach(function (bit) { bit.style.opacity = "0"; });
+        vista.style.opacity = "1";
+        vista.style.visibility = "visible";
+        vista.style.pointerEvents = "auto";
       }
 
       function placePhoto() {
@@ -384,16 +430,25 @@
         var total = pin.offsetHeight - window.innerHeight;
         var scrolled = clamp(-rect.top, 0, Math.max(total, 0));
         var heroSpan = window.innerHeight * 2;
-        if (scrolled <= 0) {
+        var stageTop = stage.getBoundingClientRect().top;
+        if (scrolled <= 0 && stageTop >= -1) {
           clearScroll();
           return;
         }
 
         takenOver = true;
         var p = clamp(scrolled / heroSpan, 0, 1);
-        var villaV = total > heroSpan ? clamp((scrolled - heroSpan) / (total - heroSpan), 0, 1) : 0;
-        if (scrolled <= heroSpan) hideVilla();
-        else applyVilla(villaV);
+        var villaV = p >= 1 ? clamp(-stageTop / window.innerHeight, 0, 1) : 0;
+        if (p < 1 || villaV <= 0) {
+          hideVilla();
+          parkVista();
+        } else if (villaV >= 1) {
+          showRest();
+        } else {
+          fixVista();
+          applyVilla(villaV);
+        }
+        applyHeader(clamp((p - 0.36) / 0.64, 0, 1));
         var grow = clamp(p / 0.46, 0, 1);
         var shift = shiftX();
         var scale = 1 + (coverScale(shift) - 1) * grow;
