@@ -615,9 +615,9 @@ ul {
   text-align: center;
   color: var(--ink);
   font-size: calc(100vw * 136 / 1920);
-  font-weight: 400;
-  letter-spacing: -0.05em;
-  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
 }
 
 .cliff__photo {
@@ -962,8 +962,6 @@ ul {
   .cliff__title {
     position: static;
     font-size: 48px;
-    line-height: 0.95;
-    letter-spacing: -0.04em;
   }
 
   .cliff__photo,
