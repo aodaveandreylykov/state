@@ -402,12 +402,41 @@
         if (!d || !hr.width || !hr.height) return;
         var cx = cr.left - hr.left + d / 2;
         var cy = cr.top - hr.top + d / 2;
+        var vw = hr.width;
+        var vh = hr.height;
         var t = clamp(p, 0, 1);
-        var left = lerp(cx - d / 2, 0, t);
-        var top = lerp(cy - d / 2, 0, t);
-        var w = lerp(d, hr.width, t);
-        var h = lerp(d, hr.height, t);
-        var rad = t >= 1 ? 0 : lerp(d / 2, 0, t);
+        var targetD = vh;
+        var circleDelta = Math.max(targetD - d, 1);
+        var sideDelta = Math.max(Math.abs(vw - targetD), 1);
+        var pCircle = circleDelta / (circleDelta + sideDelta);
+        var left;
+        var top;
+        var w;
+        var h;
+        var rad;
+        if (t >= 1) {
+          left = 0;
+          top = 0;
+          w = vw;
+          h = vh;
+          rad = 0;
+        } else if (t <= pCircle) {
+          var u = t / pCircle;
+          var diam = lerp(d, targetD, u);
+          var centerY = lerp(cy, vh / 2, u);
+          left = cx - diam / 2;
+          top = centerY - diam / 2;
+          w = diam;
+          h = diam;
+          rad = diam / 2;
+        } else {
+          var u2 = (t - pCircle) / (1 - pCircle);
+          left = lerp(cx - targetD / 2, 0, u2);
+          top = 0;
+          w = lerp(targetD, vw, u2);
+          h = vh;
+          rad = lerp(targetD / 2, 0, u2);
+        }
         var aspect = plateImg.naturalWidth && plateImg.naturalHeight
           ? plateImg.naturalWidth / plateImg.naturalHeight
           : 1920 / 1080;
