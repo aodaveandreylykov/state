@@ -559,8 +559,9 @@ ul {
 
 .vista__name {
   font-size: 22px;
-  line-height: 1.15;
-  letter-spacing: 0.16em;
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
 }
 
@@ -941,7 +942,6 @@ ul {
   }
 
   .vista__name {
-    letter-spacing: 0.12em;
     font-size: 18px;
   }
 
