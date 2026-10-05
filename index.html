@@ -222,7 +222,10 @@
           word.style.opacity = "";
         });
         man.style.transform = "";
-        manBits.forEach(function (bit) { bit.style.opacity = ""; });
+        manBits.forEach(function (bit) {
+          bit.style.opacity = "";
+          bit.style.transform = "";
+        });
         mask.style.cssText = "";
         if (photo) photo.style.cssText = "";
         overlays.forEach(function (el) { el.style.opacity = ""; });
@@ -299,6 +302,22 @@
         if (photo) photo.style.cssText = "";
         overlays.forEach(function (el) { el.style.opacity = "0"; });
         manBits.forEach(function (bit) { bit.style.opacity = ""; });
+      }
+
+      function applyManifestoEnter(coverP) {
+        var spans = [0.08, 0.50, 0.24, 0.68, 0.40, 0.84];
+        manBits.forEach(function (bit, i) {
+          var a = spans[i * 2];
+          var b = spans[i * 2 + 1];
+          var u = clamp((coverP - a) / (b - a), 0, 1);
+          var e = 1 - Math.pow(1 - u, 3);
+          bit.style.opacity = e.toFixed(3);
+          bit.style.transform = "translateY(" + ((1 - e) * 36).toFixed(2) + "px)";
+        });
+      }
+
+      function clearManifestoShift() {
+        manBits.forEach(function (bit) { bit.style.transform = ""; });
       }
 
       function lerp(a, b, t) {
@@ -495,9 +514,12 @@
         if (villaV <= 0) {
           hideVilla();
           parkVista();
+          applyManifestoEnter(coverP);
         } else if (villaV >= 1) {
+          clearManifestoShift();
           showRest();
         } else {
+          clearManifestoShift();
           fixVista();
           applyVilla(villaV);
         }
