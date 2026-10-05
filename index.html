@@ -39,7 +39,7 @@
       <div class="hero__row">
         <p class="hero__word hero__word--left">III SPACES</p>
         <figure class="hero__circle">
-          <img src="images/hero-circle.png" alt="A woman in white standing on a cliff above the ocean" width="750" height="750">
+          <img src="images/hero-full.jpg" alt="A woman in white standing on a cliff above the ocean" width="1920" height="1080">
         </figure>
         <p class="hero__word hero__word--right">III STATES</p>
       </div>
@@ -49,9 +49,12 @@
         <p>Shaped by space, rhythm, and presence.</p>
       </div>
       </div>
-      <div class="hero__full" aria-hidden="true">
+      <div class="hero__plate" aria-hidden="true">
         <img src="images/hero-full.jpg" alt="" width="1920" height="1080">
       </div>
+    </section>
+    </div>
+    </div>
 
     <section class="manifesto" id="about" aria-labelledby="manifesto-title">
       <h2 class="manifesto__quote" id="manifesto-title">
@@ -72,9 +75,6 @@
         <p class="manifesto__year">2026</p>
       </div>
     </section>
-    </section>
-    </div>
-    </div>
 
     <div class="vista-slot">
     <section class="vista" aria-label="The Cliff Villa">
@@ -158,14 +158,16 @@
       var circle = document.querySelector(".hero__circle");
       var words = document.querySelectorAll(".hero__word");
       var tag = document.querySelector(".hero__tag");
-      var full = document.querySelector(".hero__full");
+      var hero = document.querySelector(".hero");
+      var plate = document.querySelector(".hero__plate");
+      var plateImg = plate ? plate.querySelector("img") : null;
       var man = document.querySelector(".manifesto");
       var manBits = document.querySelectorAll(".manifesto__quote, .manifesto__mark, .manifesto__foot");
       var vista = document.querySelector(".vista");
       var mask = document.querySelector(".vista__mask");
       var photo = document.querySelector(".vista__photo");
       var overlays = document.querySelectorAll(".vista__poem, .vista__loc");
-      if (!pin || !stage || !slot || !nav || !circle || !full || !man || !vista || !mask || reduce.matches) return;
+      if (!pin || !stage || !slot || !nav || !circle || !hero || !plate || !plateImg || !man || !vista || !mask || reduce.matches) return;
 
       var ticking = false;
       var takenOver = false;
@@ -210,7 +212,8 @@
             tag.style.transform = "";
           }
         }
-        full.style.opacity = "";
+        plate.style.cssText = "";
+        plateImg.style.cssText = "";
         words.forEach(function (word) {
           word.style.filter = "";
           word.style.opacity = "";
@@ -387,18 +390,44 @@
         }
       }
 
-      function coverScale(shift) {
-        var size = circle.offsetWidth;
-        if (!size) return 4;
-        var parent = circle.offsetParent || circle.parentElement;
-        var pr = parent.getBoundingClientRect();
-        var cx = pr.left + circle.offsetLeft + size / 2 + shift;
-        var cy = pr.top + circle.offsetTop + size / 2;
-        var reach = Math.hypot(
-          Math.max(cx, window.innerWidth - cx),
-          Math.max(cy, window.innerHeight - cy)
-        );
-        return (reach * 2) / size + 0.04;
+      function expandPhoto(p) {
+        var shift = shiftX();
+        circle.style.animation = "none";
+        circle.style.transform = "translateX(" + shift.toFixed(3) + "px) scale(1)";
+        circle.style.opacity = "0";
+
+        var hr = hero.getBoundingClientRect();
+        var cr = circle.getBoundingClientRect();
+        var d = cr.width;
+        if (!d || !hr.width || !hr.height) return;
+        var cx = cr.left - hr.left + d / 2;
+        var cy = cr.top - hr.top + d / 2;
+        var t = clamp(p, 0, 1);
+        var left = lerp(cx - d / 2, 0, t);
+        var top = lerp(cy - d / 2, 0, t);
+        var w = lerp(d, hr.width, t);
+        var h = lerp(d, hr.height, t);
+        var rad = t >= 1 ? 0 : lerp(d / 2, 0, t);
+        var aspect = plateImg.naturalWidth && plateImg.naturalHeight
+          ? plateImg.naturalWidth / plateImg.naturalHeight
+          : 1920 / 1080;
+        var needX = Math.max(cx - left, left + w - cx);
+        var needY = Math.max(cy - top, top + h - cy);
+        var dispH = Math.max(needY, needX / aspect) * 2 + 2;
+        var dispW = dispH * aspect;
+        plate.style.left = left.toFixed(2) + "px";
+        plate.style.top = top.toFixed(2) + "px";
+        plate.style.width = w.toFixed(2) + "px";
+        plate.style.height = h.toFixed(2) + "px";
+        plate.style.right = "auto";
+        plate.style.bottom = "auto";
+        plate.style.borderRadius = rad.toFixed(2) + "px";
+        plate.style.opacity = "1";
+        plate.style.visibility = "visible";
+        plateImg.style.width = dispW.toFixed(2) + "px";
+        plateImg.style.height = dispH.toFixed(2) + "px";
+        plateImg.style.left = (cx - left - dispW / 2).toFixed(2) + "px";
+        plateImg.style.top = (cy - top - dispH / 2).toFixed(2) + "px";
       }
 
       function update() {
@@ -410,7 +439,6 @@
         var rect = pin.getBoundingClientRect();
         var total = pin.offsetHeight - window.innerHeight;
         var scrolled = clamp(-rect.top, 0, Math.max(total, 0));
-        var heroSpan = window.innerHeight * 2;
         var stageTop = stage.getBoundingClientRect().top;
         if (scrolled <= 0 && stageTop >= -1) {
           clearScroll();
@@ -418,9 +446,10 @@
         }
 
         takenOver = true;
-        var p = clamp(scrolled / heroSpan, 0, 1);
-        var villaV = p >= 1 ? clamp(-stageTop / window.innerHeight, 0, 1) : 0;
-        if (p < 1 || villaV <= 0) {
+        var p = total > 0 ? clamp(scrolled / total, 0, 1) : 1;
+        var slotTop = slot.getBoundingClientRect().top;
+        var villaV = clamp((window.innerHeight - slotTop) / window.innerHeight, 0, 1);
+        if (villaV <= 0) {
           hideVilla();
           parkVista();
         } else if (villaV >= 1) {
@@ -430,29 +459,18 @@
           applyVilla(villaV);
         }
         applyHeader(clamp((p - 0.36) / 0.64, 0, 1));
-        var grow = clamp(p / 0.46, 0, 1);
-        var shift = shiftX();
-        var scale = 1 + (coverScale(shift) - 1) * grow;
-        circle.style.animation = "none";
-        circle.style.transform = "translateX(" + shift.toFixed(3) + "px) scale(" + scale.toFixed(4) + ")";
+        expandPhoto(p);
 
-        var blur = (grow * 18).toFixed(2);
+        var blur = (p * 18).toFixed(2);
         words.forEach(function (word) {
           word.style.filter = "blur(" + blur + "px)";
-          word.style.opacity = String(1 - grow * 0.55);
+          word.style.opacity = String(1 - p * 0.85);
         });
         if (tag) {
           tag.style.animation = "none";
-          tag.style.opacity = String(1 - clamp(grow / 0.5, 0, 1));
+          tag.style.opacity = String(1 - clamp(p / 0.45, 0, 1));
           tag.style.transform = "translate(" + captionShift().toFixed(3) + "px, 0px)";
         }
-
-        var fade = clamp((p - 0.36) / 0.14, 0, 1);
-        full.style.opacity = String(fade);
-        circle.style.opacity = String(1 - fade);
-
-        var manT = clamp((p - 0.52) / 0.38, 0, 1);
-        man.style.transform = "translateY(" + ((1 - manT) * 100).toFixed(3) + "%)";
       }
 
       function requestUpdate() {

@@ -18,8 +18,8 @@
 /* State of Space — static layout of Figma frame 13002:693.
    Type: Figtree (open). The file also loaded Manrope and Forum;
    the visible display type reads as a grotesque, so Figtree is used throughout.
-   The hero plays one load animation. Scroll then opens the cliff
-   photo, lifts the manifesto, and reveals the villa through an arch. */
+   The hero plays one load animation. Scroll grows that same photo
+   from the circle to full-bleed, then the manifesto scrolls in. */
 
 :root {
   --cream: #f5f2ec;
@@ -81,7 +81,7 @@ ul {
 }
 
 .hero-pin {
-  height: 300vh;
+  height: 200vh;
 }
 
 .hero-stage {
@@ -214,10 +214,14 @@ ul {
 }
 
 .hero__circle img {
-  width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(100% * 1920 / 1080);
   height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  object-fit: fill;
 }
 
 .hero__tag {
@@ -235,29 +239,20 @@ ul {
   animation: hero-caption-in 0.65s cubic-bezier(0.33, 1, 0.68, 1) 2.15s forwards;
 }
 
-.hero__full {
+.hero__plate {
   position: absolute;
   inset: 0;
-  z-index: 4;
+  z-index: 5;
+  overflow: hidden;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
 }
 
-.hero__full img {
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  object-fit: cover;
-  object-position: center center;
-}
-
-.hero .manifesto {
+.hero__plate img {
   position: absolute;
-  inset: 0;
-  z-index: 6;
-  height: 100%;
-  overflow: auto;
-  transform: translateY(100%);
+  max-width: none;
+  object-fit: fill;
 }
 
 @keyframes hero-circle-in {
@@ -292,6 +287,8 @@ ul {
 }
 
 .manifesto {
+  box-sizing: border-box;
+  min-height: 100vh;
   background: #544f4c;
   color: #f6f3ee;
   padding: 7.08vw 1.1vw 6.9vw;
@@ -967,17 +964,8 @@ ul {
     min-height: 100vh;
   }
 
-  .hero__full {
+  .hero__plate {
     display: none;
-  }
-
-  .hero .manifesto {
-    position: static;
-    inset: auto;
-    z-index: auto;
-    height: auto;
-    overflow: visible;
-    transform: none;
   }
 
   .vista-slot,
