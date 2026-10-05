@@ -52,6 +52,7 @@
       <div class="hero__plate" aria-hidden="true">
         <img src="images/hero-full.jpg" alt="" width="1920" height="1080">
       </div>
+      <div class="hero__dim" aria-hidden="true"></div>
     </section>
     </div>
     </div>
@@ -161,6 +162,7 @@
       var hero = document.querySelector(".hero");
       var plate = document.querySelector(".hero__plate");
       var plateImg = plate ? plate.querySelector("img") : null;
+      var dim = document.querySelector(".hero__dim");
       var man = document.querySelector(".manifesto");
       var manBits = document.querySelectorAll(".manifesto__quote, .manifesto__mark, .manifesto__foot");
       var vista = document.querySelector(".vista");
@@ -214,6 +216,7 @@
         }
         plate.style.cssText = "";
         plateImg.style.cssText = "";
+        if (dim) dim.style.opacity = "";
         words.forEach(function (word) {
           word.style.filter = "";
           word.style.opacity = "";
@@ -483,7 +486,10 @@
         }
 
         takenOver = true;
-        var p = total > 0 ? clamp(scrolled / total, 0, 1) : 1;
+        var expandDistance = window.innerHeight;
+        var coverDistance = window.innerHeight;
+        var expandP = clamp(scrolled / expandDistance, 0, 1);
+        var coverP = expandP < 1 ? 0 : clamp((scrolled - expandDistance) / coverDistance, 0, 1);
         var slotTop = slot.getBoundingClientRect().top;
         var villaV = clamp((window.innerHeight - slotTop) / window.innerHeight, 0, 1);
         if (villaV <= 0) {
@@ -495,17 +501,18 @@
           fixVista();
           applyVilla(villaV);
         }
-        applyHeader(clamp((p - 0.36) / 0.64, 0, 1));
-        expandPhoto(p);
+        applyHeader(clamp((expandP - 0.36) / 0.64, 0, 1));
+        expandPhoto(expandP);
+        if (dim) dim.style.opacity = (coverP * 0.3).toFixed(3);
 
-        var blur = (p * 18).toFixed(2);
+        var blur = (expandP * 18).toFixed(2);
         words.forEach(function (word) {
           word.style.filter = "blur(" + blur + "px)";
-          word.style.opacity = String(1 - p * 0.85);
+          word.style.opacity = String(1 - expandP * 0.85);
         });
         if (tag) {
           tag.style.animation = "none";
-          tag.style.opacity = String(1 - clamp(p / 0.45, 0, 1));
+          tag.style.opacity = String(1 - clamp(expandP / 0.45, 0, 1));
           tag.style.transform = "translate(" + captionShift().toFixed(3) + "px, 0px)";
         }
       }
