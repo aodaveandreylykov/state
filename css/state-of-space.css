@@ -581,8 +581,6 @@ ul {
 }
 
 .vista__tick--on {
-  width: 46px;
-  height: 3px;
   background: #fff;
 }
 
