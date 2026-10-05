@@ -37,11 +37,11 @@
       </header>
       <div class="hero__space hero__space--top" aria-hidden="true"></div>
       <div class="hero__row">
-        <p class="hero__word hero__word--left">III SPACES</p>
+        <p class="hero__word hero__word--left" aria-label="III SPACES"><span style="--i:0">I</span><span style="--i:1">I</span><span style="--i:2">I</span><span style="--i:3">&nbsp;</span><span style="--i:4">S</span><span style="--i:5">P</span><span style="--i:6">A</span><span style="--i:7">C</span><span style="--i:8">E</span><span style="--i:9">S</span></p>
         <figure class="hero__circle">
           <img src="images/hero-full.jpg" alt="A woman in white standing on a cliff above the ocean" width="1920" height="1080">
         </figure>
-        <p class="hero__word hero__word--right">III STATES</p>
+        <p class="hero__word hero__word--right" aria-label="III STATES"><span style="--i:0">I</span><span style="--i:1">I</span><span style="--i:2">I</span><span style="--i:3">&nbsp;</span><span style="--i:4">S</span><span style="--i:5">T</span><span style="--i:6">A</span><span style="--i:7">T</span><span style="--i:8">E</span><span style="--i:9">S</span></p>
       </div>
       <div class="hero__space hero__space--mid" aria-hidden="true"></div>
       <div class="hero__tag" id="hero-tag">
@@ -231,12 +231,20 @@
       }
 
       function resetHeader() {
-        nav.style.opacity = "";
-        nav.style.transform = "";
         nav.style.pointerEvents = "";
+        if (takenOver) {
+          nav.style.animation = "none";
+          nav.style.opacity = "1";
+          nav.style.transform = "none";
+        } else {
+          nav.style.animation = "";
+          nav.style.opacity = "";
+          nav.style.transform = "";
+        }
       }
 
       function applyHeader(t) {
+        nav.style.animation = "none";
         nav.style.opacity = String(1 - t);
         nav.style.transform = "translateY(" + (-t * 100).toFixed(3) + "%)";
         nav.style.pointerEvents = t > 0.92 ? "none" : "";
