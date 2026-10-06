@@ -8,7 +8,8 @@
   <meta property="og:title" content="State of Space — The Cliff Villa">
   <meta property="og:description" content="A quiet return to yourself. Shaped by space, rhythm, and presence.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#f5f2ec">  <link rel="stylesheet" href="css/state-of-space.css?v=b8ccd93">
+  <meta name="theme-color" content="#f5f2ec">
+  <link rel="stylesheet" href="css/state-of-space.css?v=ed8910f">
 </head>
 <body id="top">
   <main>
@@ -170,7 +171,8 @@
       var manPin = document.querySelector(".manifesto-pin");
       var manDim = document.querySelector(".manifesto__dim");
       var man = document.querySelector(".manifesto");
-      var manBits = document.querySelectorAll(".manifesto__quote, .manifesto__mark, .manifesto__foot");
+      var manStage = document.querySelector(".manifesto-stage");
+      var manBits = document.querySelectorAll(".manifesto__quote, .manifesto__mark, .manifesto__label, .manifesto__body, .manifesto__year");
       var vista = document.querySelector(".vista");
       var mask = document.querySelector(".vista__mask");
       var photo = document.querySelector(".vista__photo");
@@ -311,12 +313,27 @@
         manBits.forEach(function (bit) { bit.style.opacity = ""; });
       }
 
-      function applyManifestoEnter(coverP) {
-        var spans = [0.02, 0.28, 0.36, 0.58, 0.66, 0.90];
+      function offsetWithin(bit, root) {
+        var y = 0;
+        var node = bit;
+        while (node && node !== root) {
+          y += node.offsetTop;
+          node = node.offsetParent;
+        }
+        return y;
+      }
+
+      function applyManifestoEnter() {
+        if (!manStage) return;
+        var vh = window.innerHeight;
+        var stageTop = manStage.getBoundingClientRect().top;
+        var lag = [0, 0, 0, vh * 0.045, vh * 0.09];
         manBits.forEach(function (bit, i) {
-          var a = spans[i * 2];
-          var b = spans[i * 2 + 1];
-          var u = clamp((coverP - a) / (b - a), 0, 1);
+          var local = offsetWithin(bit, manStage);
+          var naturalTop = stageTop + local;
+          var room = Math.max(vh - lag[i] - local, 1);
+          var travel = Math.min(vh * 0.2, room);
+          var u = clamp((vh - lag[i] - naturalTop) / travel, 0, 1);
           var e = 1 - Math.pow(1 - u, 3);
           bit.style.opacity = e.toFixed(3);
           bit.style.transform = "translateY(" + ((1 - e) * 36).toFixed(2) + "px)";
@@ -529,7 +546,7 @@
         if (villaV <= 0) {
           hideVilla();
           parkVista();
-          applyManifestoEnter(coverP);
+          applyManifestoEnter();
         } else if (villaV >= 1) {
           clearManifestoShift();
           showRest();

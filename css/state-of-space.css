@@ -411,10 +411,10 @@ ul {
 .manifesto__quote {
   margin: 0;
   text-align: center;
-  font-size: 3.11vw;
-  font-weight: 400;
-  line-height: 1.12;
-  letter-spacing: normal;
+  font-size: calc(100vw * 60 / 1920);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
 }
 
 .manifesto__quote span {
