@@ -8,7 +8,7 @@
   <meta property="og:title" content="State of Space — The Cliff Villa">
   <meta property="og:description" content="A quiet return to yourself. Shaped by space, rhythm, and presence.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#f5f2ec">  <link rel="stylesheet" href="css/state-of-space.css?v=7ae37c2">
+  <meta name="theme-color" content="#f5f2ec">  <link rel="stylesheet" href="css/state-of-space.css?v=e7e6086">
 </head>
 <body id="top">
   <main>
@@ -56,6 +56,8 @@
     </div>
     </div>
 
+    <div class="manifesto-pin">
+    <div class="manifesto-stage">
     <section class="manifesto" id="about" aria-labelledby="manifesto-title">
       <h2 class="manifesto__quote" id="manifesto-title">
         <span>Live a unique experience inspired by the natural rhythm</span>
@@ -76,6 +78,8 @@
       </div>
       <div class="manifesto__dim" aria-hidden="true"></div>
     </section>
+    </div>
+    </div>
 
     <div class="vista-slot">
     <section class="vista" aria-label="The Cliff Villa">
@@ -163,6 +167,7 @@
       var plate = document.querySelector(".hero__plate");
       var plateImg = plate ? plate.querySelector("img") : null;
       var dim = document.querySelector(".hero__dim");
+      var manPin = document.querySelector(".manifesto-pin");
       var manDim = document.querySelector(".manifesto__dim");
       var man = document.querySelector(".manifesto");
       var manBits = document.querySelectorAll(".manifesto__quote, .manifesto__mark, .manifesto__foot");
@@ -218,20 +223,7 @@
         plate.style.cssText = "";
         plateImg.style.cssText = "";
         if (dim) dim.style.opacity = "";
-        if (manDim) {
-          manDim.style.opacity = "";
-          manDim.style.position = "";
-          manDim.style.inset = "";
-          manDim.style.zIndex = "";
-          manDim.style.height = "";
-          manDim.style.top = "";
-          manDim.style.bottom = "";
-          manDim.style.left = "";
-          manDim.style.right = "";
-          manDim.style.width = "";
-          manDim.style.maskImage = "";
-          manDim.style.webkitMaskImage = "";
-        }
+        if (manDim) manDim.style.opacity = "";
         words.forEach(function (word) {
           word.style.filter = "";
           word.style.opacity = "";
@@ -335,39 +327,12 @@
         manBits.forEach(function (bit) { bit.style.transform = ""; });
       }
 
-      function clearManifestoDimBox() {
-        manDim.style.position = "";
-        manDim.style.inset = "";
-        manDim.style.zIndex = "";
-        manDim.style.height = "";
-        manDim.style.top = "";
-        manDim.style.bottom = "";
-        manDim.style.left = "";
-        manDim.style.right = "";
-        manDim.style.width = "";
-        manDim.style.maskImage = "";
-        manDim.style.webkitMaskImage = "";
-      }
-
       function applyManifestoDim() {
-        if (!manDim) return;
-        var vh = window.innerHeight;
-        var maskRect = mask.getBoundingClientRect();
-        var photoShown = vista.style.position === "fixed" && vista.style.visibility !== "hidden" && maskRect.height > 2;
-        var u = photoShown ? clamp((vh * 0.5 - maskRect.top) / (vh * 0.42), 0, 1) : 0;
-        var e = 1 - Math.pow(1 - u, 3);
-        manDim.style.opacity = (e * 0.3).toFixed(3);
-        if (!photoShown || u <= 0) {
-          clearManifestoDimBox();
-          return;
-        }
-        manDim.style.position = "fixed";
-        manDim.style.inset = "0";
-        manDim.style.zIndex = "4";
-        manDim.style.height = "100%";
-        manDim.style.width = "100%";
-        manDim.style.maskImage = "";
-        manDim.style.webkitMaskImage = "";
+        if (!manDim || !manPin) return;
+        var range = Math.max(manPin.offsetHeight - window.innerHeight, 0);
+        var covered = clamp(-manPin.getBoundingClientRect().top, 0, range);
+        var cover = range > 0 ? covered / range : 0;
+        manDim.style.opacity = (cover * 0.5).toFixed(3);
       }
 
       function lerp(a, b, t) {

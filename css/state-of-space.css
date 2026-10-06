@@ -375,12 +375,25 @@ ul {
   to { opacity: 1; transform: none; }
 }
 
-.manifesto {
+.manifesto-pin {
   position: relative;
   z-index: 2;
-  box-sizing: border-box;
-  min-height: 100vh;
+  height: 200vh;
   margin-top: -100vh;
+}
+
+.manifesto-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.manifesto {
+  position: relative;
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 100vh;
   background: #544f4c;
   color: #f6f3ee;
   padding: 7.08vw 1.1vw 6.9vw;
@@ -494,7 +507,9 @@ ul {
 
 .vista-slot {
   position: relative;
+  z-index: 3;
   height: 100vh;
+  margin-top: -100vh;
   background: #544f4c;
 }
 
@@ -1053,11 +1068,19 @@ ul {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-pin {
+  .hero-pin,
+  .manifesto-pin {
     height: auto;
+    margin-top: 0;
   }
 
-  .manifesto {
+  .manifesto-stage {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+
+  .vista-slot {
     margin-top: 0;
   }
 
