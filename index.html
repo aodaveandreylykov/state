@@ -11,7 +11,7 @@
   <meta name="theme-color" content="#f5f2ec">
   <link rel="preload" href="fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/Manrope-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/state-of-space.css?v=ac8d2be9369e5a8d3f4124b3a7e7f0555a5e17f8">
+  <link rel="stylesheet" href="css/state-of-space.css?v=ad40a00d3cb017efb168e5c4e5944fb4c8ab97d5">
 </head>
 <body id="top">
   <main>
@@ -146,6 +146,7 @@
       </div>
     </section>
   </main>
+  <script src="js/lenis.min.js"></script>
   <script>
     (function () {
       var button = document.querySelector(".nav__menu");
@@ -581,9 +582,38 @@
         requestAnimationFrame(update);
       }
 
+      var lenis = window.Lenis ? new window.Lenis({
+        autoRaf: true,
+        lerp: 0.1,
+        smoothWheel: true,
+        syncTouch: false
+      }) : null;
+
+      if (lenis) {
+        lenis.on("scroll", function () {
+          update();
+        });
+        document.addEventListener("click", function (event) {
+          var link = event.target.closest && event.target.closest("a[href]");
+          if (!link) return;
+          var href = link.getAttribute("href") || "";
+          if (href.charAt(0) !== "#") return;
+          var target = document.querySelector(href);
+          if (!target) return;
+          event.preventDefault();
+          lenis.scrollTo(target);
+        });
+      }
+
       window.addEventListener("scroll", requestUpdate, { passive: true });
       window.addEventListener("resize", requestUpdate);
-      reduce.addEventListener("change", requestUpdate);
+      reduce.addEventListener("change", function () {
+        if (reduce.matches && lenis) {
+          lenis.destroy();
+          lenis = null;
+        }
+        requestUpdate();
+      });
       requestUpdate();
     })();
   </script>
