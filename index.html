@@ -11,7 +11,7 @@
   <meta name="theme-color" content="#f5f2ec">
   <link rel="preload" href="fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/Manrope-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/state-of-space.css?v=ed1b5a0a034c3bebdf43b971d0ceb79d45f28e9f">
+  <link rel="stylesheet" href="css/state-of-space.css?v=ac8d2be9369e5a8d3f4124b3a7e7f0555a5e17f8">
 </head>
 <body id="top">
   <main>
@@ -332,11 +332,12 @@
         var lag = [0, 0, 0, vh * 0.045, vh * 0.09];
         manBits.forEach(function (bit, i) {
           var local = offsetWithin(bit, manStage);
+          var enterLag = i === 1 ? bit.offsetHeight : lag[i];
           var naturalTop = stageTop + local;
-          var room = Math.max(vh - lag[i] - local, 1);
-          var travel = Math.min(i === 0 ? vh * 0.5 : vh * 0.2, room);
-          var u = clamp((vh - lag[i] - naturalTop) / travel, 0, 1);
-          var e = i === 0 ? u * u * (3 - 2 * u) : 1 - Math.pow(1 - u, 3);
+          var room = Math.max(vh - enterLag - local, 1);
+          var travel = Math.min(i === 0 ? vh * 0.5 : i === 1 ? vh * 0.4 : vh * 0.2, room);
+          var u = clamp((vh - enterLag - naturalTop) / travel, 0, 1);
+          var e = i === 0 || i === 1 ? u * u * (3 - 2 * u) : 1 - Math.pow(1 - u, 3);
           bit.style.opacity = e.toFixed(3);
           bit.style.transform = "translateY(" + ((1 - e) * 36).toFixed(2) + "px)";
         });
