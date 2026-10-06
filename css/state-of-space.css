@@ -1,55 +1,22 @@
 @font-face {
-  font-family: "Figtree";
+  font-family: "Manrope";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 600;
   font-display: swap;
-  src: url("../fonts/Figtree-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: url("../fonts/Manrope-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
-  font-family: "Figtree";
+  font-family: "Manrope";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 600;
   font-display: swap;
-  src: url("../fonts/Figtree-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "Figtree";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("../fonts/Figtree-medium-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: "Figtree";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("../fonts/Figtree-medium-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "Figtree";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("../fonts/Figtree-semibold-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: "Figtree";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("../fonts/Figtree-semibold-latin.woff2") format("woff2");
+  src: url("../fonts/Manrope-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* State of Space — static layout of Figma frame 13002:693.
-   Type: Figtree (open). The file also loaded Manrope and Forum;
-   the visible display type reads as a grotesque, so Figtree is used throughout.
+   Type: Manrope. Fixed sizes are rem on a 16-pixel root; fluid sizes stay in vw.
    The hero plays one load animation. Scroll grows that same photo
    from the circle to full-bleed, then the manifesto scrolls in. */
 
@@ -60,7 +27,7 @@
   --list: #b7b2ac;
   --dark: #504848;
   --paper: #f7f4ef;
-  --font: "Figtree", "Manrope", system-ui, sans-serif;
+  --font: "Manrope", system-ui, sans-serif;
 }
 
 *,
@@ -72,6 +39,7 @@
 }
 
 html {
+  font-size: 16px;
   scroll-behavior: auto;
 }
 
@@ -99,8 +67,8 @@ ul {
 }
 
 :focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 3px;
+  outline: 0.125rem solid var(--ink);
+  outline-offset: 0.1875rem;
 }
 
 .nav {
@@ -109,7 +77,7 @@ ul {
   flex: 0 0 auto;
   margin-left: calc(100vw * -29 / 1920);
   margin-right: calc(100vw * -24 / 1920);
-  padding: 28px 0 8px;
+  padding: 1.75rem 0 0.5rem;
   transform: translateY(-100%);
   animation: hero-nav-in 0.68s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
@@ -129,9 +97,9 @@ ul {
 
 .nav__inner {
   display: grid;
-  grid-template-columns: 1fr 48px 1fr;
+  grid-template-columns: 1fr 3rem 1fr;
   align-items: center;
-  min-height: 48px;
+  min-height: 3rem;
   column-gap: 0;
 }
 
@@ -141,7 +109,7 @@ ul {
   justify-content: space-between;
   min-width: 0;
   padding-left: calc(100vw * 19 / 1920);
-  font-size: 15px;
+  font-size: 0.9375rem;
   letter-spacing: 0.01em;
 }
 
@@ -169,16 +137,16 @@ ul {
 .logo {
   display: block;
   justify-self: center;
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   line-height: 0;
 }
 
 .logo img {
-  width: 48px;
-  height: 48px;
-  max-width: 48px;
-  max-height: 48px;
+  width: 3rem;
+  height: 3rem;
+  max-width: 3rem;
+  max-height: 3rem;
   border-radius: 0;
   object-fit: fill;
 }
@@ -201,7 +169,7 @@ ul {
   min-height: 100%;
   max-height: 100%;
   overflow: hidden;
-  padding: 0 calc(100vw * 24 / 1920) 20px calc(100vw * 29 / 1920);
+  padding: 0 calc(100vw * 24 / 1920) 1.25rem calc(100vw * 29 / 1920);
 }
 
 .hero__frame {
@@ -298,7 +266,7 @@ ul {
   text-align: center;
   color: #817d7a;
   opacity: 0;
-  transform: translate(calc(100vw * -22.5 / 1920), 12px);
+  transform: translate(calc(100vw * -22.5 / 1920), 0.75rem);
   font-weight: 500;
   font-size: calc(100vw * 18.2 / 1920);
   line-height: 1.3;
@@ -356,7 +324,7 @@ ul {
 @keyframes hero-caption-in {
   from {
     opacity: 0;
-    transform: translate(calc(100vw * -22.5 / 1920), 12px);
+    transform: translate(calc(100vw * -22.5 / 1920), 0.75rem);
   }
   to {
     opacity: 1;
@@ -371,7 +339,7 @@ ul {
 }
 
 @keyframes hero-caption-in-phone {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(0.75rem); }
   to { opacity: 1; transform: none; }
 }
 
@@ -398,7 +366,7 @@ ul {
   min-height: 100vh;
   background: #544f4c;
   color: #f6f3ee;
-  padding: 7.08vw 1.1vw 120px;
+  padding: 7.08vw 1.1vw 7.5rem;
 }
 
 .manifesto__dim {
@@ -443,7 +411,7 @@ ul {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: start;
-  column-gap: clamp(96px, 22vw, 420px);
+  column-gap: clamp(6rem, 22vw, 26.25rem);
   color: #b6b2ae;
   font-size: 0.863vw;
   line-height: 1.05;
@@ -484,7 +452,7 @@ ul {
   box-sizing: border-box;
   min-height: 100vh;
   padding-top: 0;
-  padding-bottom: 48px;
+  padding-bottom: 3rem;
   overflow: hidden;
   color: #fff;
   text-align: center;
@@ -530,18 +498,18 @@ ul {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 28px;
+  gap: 1.75rem;
   box-sizing: border-box;
-  width: 440px;
-  height: 580px;
+  width: 27.5rem;
+  height: 36.25rem;
   flex-shrink: 0;
-  margin: 0 0 100px;
-  padding: 48px 32px;
-  border-radius: 160px;
+  margin: 0 0 6.25rem;
+  padding: 3rem 2rem;
+  border-radius: 10rem;
   background: rgba(33, 31, 30, 0.3);
-  -webkit-backdrop-filter: blur(40px);
-  backdrop-filter: blur(40px);
-  font-size: 42px;
+  -webkit-backdrop-filter: blur(2.5rem);
+  backdrop-filter: blur(2.5rem);
+  font-size: 2.625rem;
   line-height: 1.16;
   letter-spacing: -0.03em;
   font-weight: 400;
@@ -561,18 +529,18 @@ ul {
   bottom: auto;
   transform: none;
   box-sizing: border-box;
-  width: 440px;
+  width: 27.5rem;
   flex-shrink: 0;
   display: grid;
   grid-template-columns: 1fr auto;
-  column-gap: 28px;
-  row-gap: 6px;
+  column-gap: 1.75rem;
+  row-gap: 0.375rem;
   align-items: center;
-  padding: 20px 20px 20px 28px;
-  border-radius: 28px;
+  padding: 1.25rem 1.25rem 1.25rem 1.75rem;
+  border-radius: 1.75rem;
   background: rgba(33, 31, 30, 0.3);
-  -webkit-backdrop-filter: blur(40px);
-  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(2.5rem);
+  backdrop-filter: blur(2.5rem);
   text-align: left;
 }
 
@@ -599,13 +567,13 @@ ul {
 }
 
 .vista__kicker {
-  font-size: 11px;
+  font-size: 0.6875rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
 .vista__name {
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 600;
   line-height: 0.9;
   letter-spacing: -0.03em;
@@ -615,15 +583,15 @@ ul {
 .vista__ticks {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
   margin: 0;
 }
 
 .vista__tick {
   display: block;
-  width: 28px;
-  height: 2px;
-  border-radius: 2px;
+  width: 1.75rem;
+  height: 0.125rem;
+  border-radius: 0.125rem;
   background: rgba(255, 255, 255, 0.38);
 }
 
@@ -636,12 +604,12 @@ ul {
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  height: 44px;
-  padding: 0 22px;
-  border-radius: 999px;
+  height: 2.75rem;
+  padding: 0 1.375rem;
+  border-radius: 62.4375rem;
   background: #fff;
   color: var(--ink);
-  font-size: 15px;
+  font-size: 0.9375rem;
 }
 
 .cliff {
@@ -671,7 +639,7 @@ ul {
   display: block;
   max-width: none;
   object-fit: cover;
-  border-radius: 32px;
+  border-radius: 2rem;
 }
 
 .cliff__photo--sunset {
@@ -679,7 +647,7 @@ ul {
   top: calc(100vh * 20 / 1080);
   width: calc(100vw * 537 / 1920);
   height: calc(100vh * 380 / 1080);
-  border-radius: 0 32px 32px 0;
+  border-radius: 0 2rem 2rem 0;
   object-position: left center;
 }
 
@@ -688,7 +656,7 @@ ul {
   top: 0;
   width: calc(100vw * 400 / 1920);
   height: calc(100vh * 300 / 1080);
-  border-radius: 0 0 32px 32px;
+  border-radius: 0 0 2rem 2rem;
   object-position: center bottom;
 }
 
@@ -712,7 +680,7 @@ ul {
   top: calc(100vh * 780 / 1080);
   width: calc(100vw * 400 / 1920);
   height: calc(100vh * 300 / 1080);
-  border-radius: 32px 32px 0 0;
+  border-radius: 2rem 2rem 0 0;
   object-position: center top;
 }
 
@@ -790,20 +758,20 @@ ul {
   letter-spacing: -0.093em;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 50rem) {
   .nav {
-    margin-left: -20px;
-    margin-right: -20px;
-    padding: 10px 0 0;
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
+    padding: 0.625rem 0 0;
   }
 
   .nav__inner {
     display: grid;
-    grid-template-columns: 1fr 48px 1fr;
+    grid-template-columns: 1fr 3rem 1fr;
     align-items: center;
     justify-content: initial;
     column-gap: 0;
-    row-gap: 14px;
+    row-gap: 0.875rem;
     min-height: 0;
     padding-left: 0;
     padding-right: 0;
@@ -815,8 +783,8 @@ ul {
     top: auto;
     grid-column: 2;
     grid-row: 1;
-    width: 48px;
-    height: 48px;
+    width: 3rem;
+    height: 3rem;
     margin: 0;
     justify-self: center;
     transform: none;
@@ -827,8 +795,8 @@ ul {
     grid-column: 3;
     grid-row: 1;
     justify-self: end;
-    margin-right: 11px;
-    font-size: 14px;
+    margin-right: 0.6875rem;
+    font-size: 0.875rem;
     letter-spacing: 0.01em;
   }
 
@@ -837,7 +805,7 @@ ul {
     display: none;
     padding-left: 0;
     padding-right: 0;
-    font-size: 16px;
+    font-size: 1rem;
   }
 
   .nav__group::before,
@@ -851,15 +819,15 @@ ul {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    gap: 12px;
+    gap: 0.75rem;
     grid-column: 1 / -1;
     grid-row: auto;
-    padding: 0 20px;
+    padding: 0 1.25rem;
   }
 
   .hero {
     min-height: 100vh;
-    padding: 0 20px 16px;
+    padding: 0 1.25rem 1rem;
   }
 
   .hero__space--top,
@@ -903,20 +871,20 @@ ul {
 
   .hero__tag {
     margin-top: 0;
-    font-size: 15px;
+    font-size: 0.9375rem;
     line-height: 1.3;
     letter-spacing: -0.01em;
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(0.75rem);
     animation-name: hero-caption-in-phone;
   }
 
   .manifesto {
-    padding: 48px 20px 40px;
+    padding: 3rem 1.25rem 2.5rem;
   }
 
   .manifesto__quote {
-    font-size: 22px;
+    font-size: 1.375rem;
     line-height: 1.15;
   }
 
@@ -925,19 +893,19 @@ ul {
   }
 
   .manifesto__mark {
-    margin: 28px 0 32px;
+    margin: 1.75rem 0 2rem;
   }
 
   .manifesto__mark img {
-    width: 72px;
-    height: 72px;
+    width: 4.5rem;
+    height: 4.5rem;
   }
 
   .manifesto__foot {
     grid-template-columns: 1fr;
     justify-items: center;
-    gap: 14px;
-    font-size: 14px;
+    gap: 0.875rem;
+    font-size: 0.875rem;
     line-height: 1.35;
     text-align: center;
   }
@@ -961,37 +929,37 @@ ul {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 28px;
+    gap: 1.75rem;
     height: auto;
     min-height: 100vh;
-    padding: 72px 20px 96px;
+    padding: 4.5rem 1.25rem 6rem;
   }
 
   .vista__poem {
-    width: min(260px, 78vw);
+    width: min(16.25rem, 78vw);
     height: auto;
-    min-height: 520px;
+    min-height: 32.5rem;
     margin: 0;
-    padding: 56px 22px 36px;
-    border-radius: 160px;
-    font-size: 26px;
+    padding: 3.5rem 1.375rem 2.25rem;
+    border-radius: 10rem;
+    font-size: 1.625rem;
     line-height: 1.18;
   }
 
   .vista__loc {
     position: static;
     transform: none;
-    width: min(100%, 440px);
+    width: min(100%, 27.5rem);
     flex-wrap: wrap;
     justify-content: space-between;
   }
 
   .vista__name {
-    font-size: 18px;
+    font-size: 1.125rem;
   }
 
   .vista__ticks {
-    margin-bottom: 4px;
+    margin-bottom: 0.25rem;
   }
 
   .cliff {
@@ -1000,13 +968,13 @@ ul {
     overflow: visible;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 36px 16px 48px;
+    gap: 1rem;
+    padding: 2.25rem 1rem 3rem;
   }
 
   .cliff__title {
     position: static;
-    font-size: 48px;
+    font-size: 3rem;
   }
 
   .cliff__photo,
@@ -1019,8 +987,8 @@ ul {
     left: auto;
     top: auto;
     width: 100%;
-    height: 240px;
-    border-radius: 24px;
+    height: 15rem;
+    border-radius: 1.5rem;
     object-position: center center;
   }
 
@@ -1029,21 +997,21 @@ ul {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 28px;
-    padding: 36px 20px 48px;
+    gap: 1.75rem;
+    padding: 2.25rem 1.25rem 3rem;
     overflow: visible;
   }
 
   .qualities__photo {
     position: static;
-    width: 210px;
-    height: 282px;
-    border-radius: 20px;
+    width: 13.125rem;
+    height: 17.625rem;
+    border-radius: 1.25rem;
   }
 
   .qualities__copy {
     position: static;
-    font-size: 36px;
+    font-size: 2.25rem;
     letter-spacing: -0.03em;
   }
 
@@ -1062,12 +1030,12 @@ ul {
   }
 
   .qualities__label {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   .qualities__num {
-    margin-top: 8px;
-    font-size: 96px;
+    margin-top: 0.5rem;
+    font-size: 6rem;
     line-height: 0.8;
     letter-spacing: -0.06em;
   }
@@ -1075,9 +1043,9 @@ ul {
 
 /* 650–799: the phone circle (338/390 of the width) is too tall and
    pins III SPACES to the logo and III STATES to the caption. */
-@media (min-width: 650px) and (max-width: 799px) {
+@media (min-width: 40.625rem) and (max-width: 49.9375rem) {
   .hero__circle {
-    width: min(calc(100vw * 338 / 390), calc(100vh - 169px - 100vw * 103 / 390));
+    width: min(calc(100vw * 338 / 390), calc(100vh - 10.5625rem - 100vw * 103 / 390));
   }
 }
 
@@ -1171,7 +1139,7 @@ ul {
   }
 }
 
-@media (prefers-reduced-motion: reduce) and (max-width: 800px) {
+@media (prefers-reduced-motion: reduce) and (max-width: 50rem) {
   .hero__circle,
   .hero__word,
   .hero__word--left,
