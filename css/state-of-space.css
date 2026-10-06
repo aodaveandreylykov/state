@@ -1073,6 +1073,14 @@ ul {
   }
 }
 
+/* 650–799: the phone circle (338/390 of the width) is too tall and
+   pins III SPACES to the logo and III STATES to the caption. */
+@media (min-width: 650px) and (max-width: 799px) {
+  .hero__circle {
+    width: min(calc(100vw * 338 / 390), calc(100vh - 169px - 100vw * 103 / 390));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-pin,
   .manifesto-pin {
