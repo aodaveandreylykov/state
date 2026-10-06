@@ -8,8 +8,7 @@
   <meta property="og:title" content="State of Space — The Cliff Villa">
   <meta property="og:description" content="A quiet return to yourself. Shaped by space, rhythm, and presence.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#f5f2ec">
-  <link rel="stylesheet" href="css/state-of-space.css?v=463c73f">
+  <meta name="theme-color" content="#f5f2ec">  <link rel="stylesheet" href="css/state-of-space.css?v=2209b0e">
 </head>
 <body id="top">
   <main>
@@ -75,6 +74,7 @@
         </p>
         <p class="manifesto__year">2026</p>
       </div>
+      <div class="manifesto__dim" aria-hidden="true"></div>
     </section>
 
     <div class="vista-slot">
@@ -163,6 +163,7 @@
       var plate = document.querySelector(".hero__plate");
       var plateImg = plate ? plate.querySelector("img") : null;
       var dim = document.querySelector(".hero__dim");
+      var manDim = document.querySelector(".manifesto__dim");
       var man = document.querySelector(".manifesto");
       var manBits = document.querySelectorAll(".manifesto__quote, .manifesto__mark, .manifesto__foot");
       var vista = document.querySelector(".vista");
@@ -217,6 +218,7 @@
         plate.style.cssText = "";
         plateImg.style.cssText = "";
         if (dim) dim.style.opacity = "";
+        if (manDim) manDim.style.opacity = "";
         words.forEach(function (word) {
           word.style.filter = "";
           word.style.opacity = "";
@@ -305,7 +307,7 @@
       }
 
       function applyManifestoEnter(coverP) {
-        var spans = [0.08, 0.50, 0.24, 0.68, 0.40, 0.84];
+        var spans = [0.02, 0.28, 0.36, 0.58, 0.66, 0.90];
         manBits.forEach(function (bit, i) {
           var a = spans[i * 2];
           var b = spans[i * 2 + 1];
@@ -525,7 +527,8 @@
         }
         applyHeader(clamp((expandP - 0.36) / 0.64, 0, 1));
         expandPhoto(expandP);
-        if (dim) dim.style.opacity = (coverP * 0.3).toFixed(3);
+        if (dim) dim.style.opacity = (coverP * 0.5).toFixed(3);
+        if (manDim) manDim.style.opacity = (clamp(villaV, 0, 1) * 0.5).toFixed(3);
 
         var blur = (expandP * 18).toFixed(2);
         words.forEach(function (word) {
