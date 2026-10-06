@@ -9,7 +9,7 @@
   <meta property="og:description" content="A quiet return to yourself. Shaped by space, rhythm, and presence.">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#f5f2ec">
-  <link rel="stylesheet" href="css/state-of-space.css?v=7f3a74a">
+  <link rel="stylesheet" href="css/state-of-space.css?v=b461643">
 </head>
 <body id="top">
   <main>
@@ -186,12 +186,16 @@
         return Math.min(b, Math.max(a, v));
       }
 
+      function designWidth() {
+        return Math.min(window.innerWidth, 1920);
+      }
+
       function shiftX() {
-        return window.innerWidth > 800 ? (-2.5 * window.innerWidth / 1920) : 0;
+        return window.innerWidth > 800 ? (-2.5 * designWidth() / 1920) : 0;
       }
 
       function captionShift() {
-        return window.innerWidth > 800 ? (-22.5 * window.innerWidth / 1920) : 0;
+        return window.innerWidth > 800 ? (-22.5 * designWidth() / 1920) : 0;
       }
 
       function restCircle() {

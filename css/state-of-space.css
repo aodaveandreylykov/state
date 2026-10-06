@@ -16,7 +16,7 @@
 }
 
 /* State of Space — static layout of Figma frame 13002:693.
-   Type: Manrope. Fixed sizes are rem on a 16-pixel root; fluid sizes stay in vw.
+   Type: Manrope. Fixed sizes are rem on a 16-pixel root; fluid vw sizes stay proportional below 1920 and cap at that frame.
    The hero plays one load animation. Scroll grows that same photo
    from the circle to full-bleed, then the manifesto scrolls in. */
 
@@ -75,8 +75,8 @@ ul {
   position: relative;
   z-index: 30;
   flex: 0 0 auto;
-  margin-left: calc(100vw * -29 / 1920);
-  margin-right: calc(100vw * -24 / 1920);
+  margin-left: max(calc(100vw * -29 / 1920), -1.8125rem);
+  margin-right: max(calc(100vw * -24 / 1920), -1.5rem);
   padding: 1.75rem 0 0.5rem;
   transform: translateY(-100%);
   animation: hero-nav-in 0.68s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -108,7 +108,7 @@ ul {
   align-items: center;
   justify-content: space-between;
   min-width: 0;
-  padding-left: calc(100vw * 19 / 1920);
+  padding-left: min(calc(100vw * 19 / 1920), 1.1875rem);
   font-size: 0.9375rem;
   letter-spacing: 0.01em;
 }
@@ -122,7 +122,7 @@ ul {
 
 .nav__group--end {
   padding-left: 0;
-  padding-right: calc(100vw * 22 / 1920);
+  padding-right: min(calc(100vw * 22 / 1920), 1.375rem);
 }
 
 .nav__group--end::after {
@@ -169,7 +169,7 @@ ul {
   min-height: 100%;
   max-height: 100%;
   overflow: hidden;
-  padding: 0 calc(100vw * 24 / 1920) 1.25rem calc(100vw * 29 / 1920);
+  padding: 0 min(calc(100vw * 24 / 1920), 1.5rem) 1.25rem min(calc(100vw * 29 / 1920), 1.8125rem);
 }
 
 .hero__frame {
@@ -200,10 +200,10 @@ ul {
 
 .hero__word {
   color: #33302f;
-  font-size: calc(100vw * 110 / 1920);
+  font-size: min(calc(100vw * 110 / 1920), 6.875rem);
   line-height: 0.8;
   letter-spacing: -0.04em;
-  transform: translate(calc(100vw * -10 / 1920), calc(100vw * 2.5 / 1920));
+  transform: translate(max(calc(100vw * -10 / 1920), -0.625rem), min(calc(100vw * 2.5 / 1920), 0.15625rem));
   font-weight: 600;
   white-space: nowrap;
   min-width: 0;
@@ -228,7 +228,7 @@ ul {
 .hero__word--right {
   justify-self: end;
   text-align: right;
-  transform: translate(calc(100vw * 2 / 1920), calc(100vw * 2.5 / 1920));
+  transform: translate(min(calc(100vw * 2 / 1920), 0.125rem), min(calc(100vw * 2.5 / 1920), 0.15625rem));
 }
 
 .hero__word--right span {
@@ -238,12 +238,12 @@ ul {
 .hero__circle {
   position: relative;
   z-index: 3;
-  width: calc(100vw * 499 / 1920);
+  width: min(calc(100vw * 499 / 1920), 31.1875rem);
   aspect-ratio: 1;
   border-radius: 50%;
   overflow: hidden;
   opacity: 0;
-  transform: translateX(calc(100vw * -2.5 / 1920)) scale(0.12);
+  transform: translateX(max(calc(100vw * -2.5 / 1920), -0.15625rem)) scale(0.12);
   animation: hero-circle-in 1.28s cubic-bezier(0.22, 1, 0.36, 1) 0.58s forwards;
 }
 
@@ -266,9 +266,9 @@ ul {
   text-align: center;
   color: #817d7a;
   opacity: 0;
-  transform: translate(calc(100vw * -22.5 / 1920), 0.75rem);
+  transform: translate(max(calc(100vw * -22.5 / 1920), -1.40625rem), 0.75rem);
   font-weight: 500;
-  font-size: calc(100vw * 18.2 / 1920);
+  font-size: min(calc(100vw * 18.2 / 1920), 1.1375rem);
   line-height: 1.3;
   letter-spacing: -0.01em;
   animation: hero-caption-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) 3.53s forwards;
@@ -307,12 +307,12 @@ ul {
 @keyframes hero-circle-in {
   0% {
     opacity: 0;
-    transform: translateX(calc(100vw * -2.5 / 1920)) scale(0.12);
+    transform: translateX(max(calc(100vw * -2.5 / 1920), -0.15625rem)) scale(0.12);
   }
   20% { opacity: 1; }
   100% {
     opacity: 1;
-    transform: translateX(calc(100vw * -2.5 / 1920)) scale(1);
+    transform: translateX(max(calc(100vw * -2.5 / 1920), -0.15625rem)) scale(1);
   }
 }
 
@@ -324,11 +324,11 @@ ul {
 @keyframes hero-caption-in {
   from {
     opacity: 0;
-    transform: translate(calc(100vw * -22.5 / 1920), 0.75rem);
+    transform: translate(max(calc(100vw * -22.5 / 1920), -1.40625rem), 0.75rem);
   }
   to {
     opacity: 1;
-    transform: translate(calc(100vw * -22.5 / 1920), 0);
+    transform: translate(max(calc(100vw * -22.5 / 1920), -1.40625rem), 0);
   }
 }
 
@@ -366,7 +366,7 @@ ul {
   min-height: 100vh;
   background: #544f4c;
   color: #f6f3ee;
-  padding: 7.08vw 1.1vw 7.5rem;
+  padding: min(7.08vw, 8.496rem) min(1.1vw, 1.32rem) 7.5rem;
 }
 
 .manifesto__dim {
@@ -381,7 +381,7 @@ ul {
 .manifesto__quote {
   margin: 0;
   text-align: center;
-  font-size: calc(100vw * 60 / 1920);
+  font-size: min(calc(100vw * 60 / 1920), 3.75rem);
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.03em;
@@ -400,8 +400,8 @@ ul {
 }
 
 .manifesto__mark img {
-  width: 5.16vw;
-  height: 5.16vw;
+  width: min(5.16vw, 6.192rem);
+  height: min(5.16vw, 6.192rem);
   max-width: none;
   border-radius: 0;
   object-fit: fill;
@@ -413,7 +413,7 @@ ul {
   align-items: start;
   column-gap: clamp(6rem, 22vw, 26.25rem);
   color: #b6b2ae;
-  font-size: 0.863vw;
+  font-size: min(0.863vw, 1.0356rem);
   line-height: 1.05;
   letter-spacing: normal;
 }
@@ -430,7 +430,7 @@ ul {
 .manifesto__body {
   justify-self: center;
   width: max-content;
-  max-width: calc(100vw - 46vw);
+  max-width: min(54vw, 64.8rem);
   text-align: center;
 }
 
@@ -628,7 +628,7 @@ ul {
   margin: 0;
   text-align: center;
   color: var(--ink);
-  font-size: calc(100vw * 136 / 1920);
+  font-size: min(calc(100vw * 136 / 1920), 8.5rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 0.9;
@@ -645,40 +645,40 @@ ul {
 .cliff__photo--sunset {
   left: 0;
   top: calc(100vh * 20 / 1080);
-  width: calc(100vw * 537 / 1920);
+  width: min(calc(100vw * 537 / 1920), 33.5625rem);
   height: calc(100vh * 380 / 1080);
   border-radius: 0 2rem 2rem 0;
   object-position: left center;
 }
 
 .cliff__photo--sofa {
-  left: calc(100vw * 1360 / 1920);
+  left: min(calc(100vw * 1360 / 1920), 85rem);
   top: 0;
-  width: calc(100vw * 400 / 1920);
+  width: min(calc(100vw * 400 / 1920), 25rem);
   height: calc(100vh * 300 / 1080);
   border-radius: 0 0 2rem 2rem;
   object-position: center bottom;
 }
 
 .cliff__photo--bench {
-  left: calc(100vw * -200 / 1920);
+  left: max(calc(100vw * -200 / 1920), -12.5rem);
   top: calc(100vh * 560 / 1080);
-  width: calc(100vw * 340 / 1920);
+  width: min(calc(100vw * 340 / 1920), 21.25rem);
   height: calc(100vh * 440 / 1080);
   object-position: center center;
 }
 
 .cliff__photo--window {
-  left: calc(100vw * 1560 / 1920);
+  left: min(calc(100vw * 1560 / 1920), 97.5rem);
   top: calc(100vh * 620 / 1080);
-  width: calc(100vw * 340 / 1920);
+  width: min(calc(100vw * 340 / 1920), 21.25rem);
   height: calc(100vh * 440 / 1080);
 }
 
 .cliff__photo--aerial {
-  left: calc(100vw * 620 / 1920);
+  left: min(calc(100vw * 620 / 1920), 38.75rem);
   top: calc(100vh * 780 / 1080);
-  width: calc(100vw * 400 / 1920);
+  width: min(calc(100vw * 400 / 1920), 25rem);
   height: calc(100vh * 300 / 1080);
   border-radius: 2rem 2rem 0 0;
   object-position: center top;
@@ -686,27 +686,27 @@ ul {
 
 .qualities {
   position: relative;
-  height: calc(100vw * 1638 / 1920);
+  height: min(calc(100vw * 1638 / 1920), 102.375rem);
   background: var(--cream);
   overflow: hidden;
 }
 
 .qualities__photo {
   position: absolute;
-  left: calc(100vw * 20 / 1920);
-  top: calc(100vw * 700 / 1920);
-  width: calc(100vw * 298 / 1920);
-  height: calc(100vw * 400 / 1920);
+  left: min(calc(100vw * 20 / 1920), 1.25rem);
+  top: min(calc(100vw * 700 / 1920), 43.75rem);
+  width: min(calc(100vw * 298 / 1920), 18.625rem);
+  height: min(calc(100vw * 400 / 1920), 25rem);
   max-width: none;
-  border-radius: calc(100vw * 24 / 1920);
+  border-radius: min(calc(100vw * 24 / 1920), 1.5rem);
   object-fit: cover;
 }
 
 .qualities__copy {
   position: absolute;
-  left: calc(100vw * 650 / 1920);
-  top: calc(100vw * 123 / 1920);
-  font-size: calc(100vw * 140 / 1920);
+  left: min(calc(100vw * 650 / 1920), 40.625rem);
+  top: min(calc(100vw * 123 / 1920), 7.6875rem);
+  font-size: min(calc(100vw * 140 / 1920), 8.75rem);
   font-weight: 400;
   letter-spacing: -0.01em;
   line-height: 1;
@@ -717,7 +717,7 @@ ul {
   font-size: inherit;
   font-weight: 400;
   line-height: 1;
-  height: calc(100vw * 140 / 1920);
+  height: min(calc(100vw * 140 / 1920), 8.75rem);
 }
 
 .qualities__title {
@@ -730,29 +730,29 @@ ul {
 
 .qualities__stat {
   position: absolute;
-  top: calc(100vw * 1244 / 1920);
+  top: min(calc(100vw * 1244 / 1920), 77.75rem);
 }
 
 .qualities__stat--hours {
-  left: calc(100vw * 20 / 1920);
+  left: min(calc(100vw * 20 / 1920), 1.25rem);
 }
 
 .qualities__stat--meters {
-  left: calc(100vw * 654 / 1920);
+  left: min(calc(100vw * 654 / 1920), 40.875rem);
 }
 
 .qualities__label {
   color: #7c7875;
-  font-size: calc(100vw * 18 / 1920);
+  font-size: min(calc(100vw * 18 / 1920), 1.125rem);
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.01em;
 }
 
 .qualities__num {
-  margin-top: calc(100vw * 36 / 1920);
+  margin-top: min(calc(100vw * 36 / 1920), 2.25rem);
   color: #322f2c;
-  font-size: calc(100vw * 440 / 1920);
+  font-size: min(calc(100vw * 440 / 1920), 27.5rem);
   font-weight: 400;
   line-height: 0.7;
   letter-spacing: -0.093em;
@@ -1126,7 +1126,7 @@ ul {
 
   .hero__circle {
     opacity: 1;
-    transform: translateX(calc(100vw * -2.5 / 1920));
+    transform: translateX(max(calc(100vw * -2.5 / 1920), -0.15625rem));
   }
 
   .hero__word span {
@@ -1135,7 +1135,7 @@ ul {
 
   .hero__tag {
     opacity: 1;
-    transform: translateX(calc(100vw * -22.5 / 1920));
+    transform: translateX(max(calc(100vw * -22.5 / 1920), -1.40625rem));
   }
 }
 
@@ -1146,5 +1146,35 @@ ul {
   .hero__word--right,
   .hero__tag {
     transform: none;
+  }
+}
+
+@media (min-width: 120rem) {
+  .cliff__title {
+    top: min(calc(100vh * 476 / 1080), 29.75rem);
+  }
+
+  .cliff__photo--sunset {
+    top: min(calc(100vh * 20 / 1080), 1.25rem);
+    height: min(calc(100vh * 380 / 1080), 23.75rem);
+  }
+
+  .cliff__photo--sofa {
+    height: min(calc(100vh * 300 / 1080), 18.75rem);
+  }
+
+  .cliff__photo--bench {
+    top: min(calc(100vh * 560 / 1080), 35rem);
+    height: min(calc(100vh * 440 / 1080), 27.5rem);
+  }
+
+  .cliff__photo--window {
+    top: min(calc(100vh * 620 / 1080), 38.75rem);
+    height: min(calc(100vh * 440 / 1080), 27.5rem);
+  }
+
+  .cliff__photo--aerial {
+    top: min(calc(100vh * 780 / 1080), 48.75rem);
+    height: min(calc(100vh * 300 / 1080), 18.75rem);
   }
 }
