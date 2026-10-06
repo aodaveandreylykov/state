@@ -109,7 +109,7 @@ ul {
   justify-content: space-between;
   min-width: 0;
   padding-left: calc(100vw * 19 / 1920);
-  font-size: 0.9375rem;
+  font-size: 1.5rem;
   letter-spacing: 0.01em;
 }
 
