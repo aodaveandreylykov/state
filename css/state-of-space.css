@@ -110,7 +110,7 @@ ul {
   min-width: 0;
   padding-left: calc(100vw * 19 / 1920);
   font-weight: 500;
-  font-size: max(1rem, calc(100vw * 16 / 1440));
+  font-size: max(1rem, calc(100vw * 16 / 1920));
   letter-spacing: -0.03em;
 }
 
