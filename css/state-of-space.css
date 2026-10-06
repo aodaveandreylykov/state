@@ -392,11 +392,13 @@ ul {
 .manifesto {
   position: relative;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   min-height: 100vh;
   background: #544f4c;
   color: #f6f3ee;
-  padding: 7.08vw 1.1vw 6.9vw;
+  padding: 7.08vw 1.1vw 120px;
 }
 
 .manifesto__dim {
@@ -425,7 +427,7 @@ ul {
 .manifesto__mark {
   display: flex;
   justify-content: center;
-  margin: 11.88vw 0 12.03vw;
+  margin: 11.88vw 0 0;
 }
 
 .manifesto__mark img {
@@ -440,6 +442,7 @@ ul {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: start;
+  margin-top: auto;
   column-gap: clamp(96px, 22vw, 420px);
   color: #b6b2ae;
   font-size: 0.863vw;
@@ -934,6 +937,7 @@ ul {
     grid-template-columns: 1fr;
     justify-items: center;
     gap: 14px;
+    margin-top: 0;
     font-size: 14px;
     line-height: 1.35;
     text-align: center;
