@@ -8,7 +8,7 @@
   <meta property="og:title" content="State of Space — The Cliff Villa">
   <meta property="og:description" content="A quiet return to yourself. Shaped by space, rhythm, and presence.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#f5f2ec">  <link rel="stylesheet" href="css/state-of-space.css?v=18e0163">
+  <meta name="theme-color" content="#f5f2ec">  <link rel="stylesheet" href="css/state-of-space.css?v=7ae37c2">
 </head>
 <body id="top">
   <main>
@@ -220,8 +220,15 @@
         if (dim) dim.style.opacity = "";
         if (manDim) {
           manDim.style.opacity = "";
+          manDim.style.position = "";
+          manDim.style.inset = "";
+          manDim.style.zIndex = "";
           manDim.style.height = "";
+          manDim.style.top = "";
           manDim.style.bottom = "";
+          manDim.style.left = "";
+          manDim.style.right = "";
+          manDim.style.width = "";
           manDim.style.maskImage = "";
           manDim.style.webkitMaskImage = "";
         }
@@ -328,31 +335,39 @@
         manBits.forEach(function (bit) { bit.style.transform = ""; });
       }
 
+      function clearManifestoDimBox() {
+        manDim.style.position = "";
+        manDim.style.inset = "";
+        manDim.style.zIndex = "";
+        manDim.style.height = "";
+        manDim.style.top = "";
+        manDim.style.bottom = "";
+        manDim.style.left = "";
+        manDim.style.right = "";
+        manDim.style.width = "";
+        manDim.style.maskImage = "";
+        manDim.style.webkitMaskImage = "";
+      }
+
       function applyManifestoDim() {
         if (!manDim) return;
         var vh = window.innerHeight;
-        var manRect = man.getBoundingClientRect();
         var maskRect = mask.getBoundingClientRect();
-        var photoShown = vista.style.visibility !== "hidden" && maskRect.height > 2;
+        var photoShown = vista.style.position === "fixed" && vista.style.visibility !== "hidden" && maskRect.height > 2;
         var u = photoShown ? clamp((vh * 0.5 - maskRect.top) / (vh * 0.42), 0, 1) : 0;
         var e = 1 - Math.pow(1 - u, 3);
         manDim.style.opacity = (e * 0.3).toFixed(3);
         if (!photoShown || u <= 0) {
-          manDim.style.top = "";
-          manDim.style.height = "";
-          manDim.style.bottom = "";
-          manDim.style.maskImage = "";
-          manDim.style.webkitMaskImage = "";
+          clearManifestoDimBox();
           return;
         }
-        var archTop = maskRect.top - manRect.top;
-        var h = Math.max(0, Math.min(manRect.height, archTop - 32));
-        manDim.style.top = "0px";
-        manDim.style.bottom = "auto";
-        manDim.style.height = h.toFixed(2) + "px";
-        var fade = "linear-gradient(to bottom, transparent 0, transparent calc(100% - 300px), #000 calc(100% - 110px), #000 calc(100% - 70px), transparent 100%)";
-        manDim.style.maskImage = fade;
-        manDim.style.webkitMaskImage = fade;
+        manDim.style.position = "fixed";
+        manDim.style.inset = "0";
+        manDim.style.zIndex = "4";
+        manDim.style.height = "100%";
+        manDim.style.width = "100%";
+        manDim.style.maskImage = "";
+        manDim.style.webkitMaskImage = "";
       }
 
       function lerp(a, b, t) {
