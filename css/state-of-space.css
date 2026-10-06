@@ -510,7 +510,7 @@ ul {
   z-index: 3;
   height: 100vh;
   margin-top: -100vh;
-  background: #544f4c;
+  background: transparent;
 }
 
 .vista-slot .vista {
