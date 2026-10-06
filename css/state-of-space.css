@@ -205,6 +205,8 @@ ul {
   letter-spacing: -0.04em;
   transform: translate(calc(100vw * -10 / 1920), calc(100vw * 2.5 / 1920));
   font-weight: 600;
+  font-synthesis: none;
+  font-variation-settings: "wght" 600;
   white-space: nowrap;
   min-width: 0;
 }
@@ -213,6 +215,9 @@ ul {
   display: inline-block;
   color: #33302f;
   opacity: 0;
+  font-weight: 600;
+  font-synthesis: none;
+  font-variation-settings: "wght" 600;
   animation: hero-letter 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
@@ -317,8 +322,16 @@ ul {
 }
 
 @keyframes hero-letter {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+    font-weight: 600;
+    font-variation-settings: "wght" 600;
+  }
+  to {
+    opacity: 1;
+    font-weight: 600;
+    font-variation-settings: "wght" 600;
+  }
 }
 
 @keyframes hero-caption-in {
